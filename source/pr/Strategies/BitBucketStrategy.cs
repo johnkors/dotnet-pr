@@ -6,7 +6,16 @@ namespace PR
     {
         public bool IsMatch(string remoteUrl)
         {
-            return new Uri(remoteUrl).Host.Equals("bitbucket", StringComparison.InvariantCultureIgnoreCase);
+            Uri theUri;
+            var couldCreate = Uri.TryCreate(remoteUrl, UriKind.Absolute, out theUri);
+            if (couldCreate)
+            {
+                var sshUrlMatch = theUri.Host.StartsWith("ssh://git@bitbucket", StringComparison.InvariantCultureIgnoreCase);
+                var httpUrlMatch = theUri.Host.StartsWith("http://bitbucket/scm", StringComparison.InvariantCultureIgnoreCase);
+                return sshUrlMatch || httpUrlMatch;
+            }
+                
+            return false;
         }
 
         public string TransformToPRUrl(string gitRemoteUrl, string currentBranch)

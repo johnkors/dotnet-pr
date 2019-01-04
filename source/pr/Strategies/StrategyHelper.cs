@@ -9,7 +9,8 @@ namespace PR
 
         private static IEnumerable<IVCSStrategy> SupportedStrategies = new List<IVCSStrategy>
         {
-            new BitBucketStrategy()
+            new BitBucketStrategy(),
+            new GitHubStrategy()
         };
         
         public static IVCSStrategy GetVCSStrategy(string remoteUrl)
