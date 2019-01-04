@@ -2,11 +2,11 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace pr
+namespace PR
 {
-    public static class Browser
+    internal static class Browser
     {
-        public static void Open(string url, bool launch = false)
+        public static void Open(string url, bool launch = true)
         {
             if (launch)
             {

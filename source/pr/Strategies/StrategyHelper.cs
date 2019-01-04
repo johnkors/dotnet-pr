@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace pr
+namespace PR
 {
     internal class StrategyHelper
     {
@@ -14,12 +14,7 @@ namespace pr
         
         public static IVCSStrategy GetVCSStrategy(string remoteUrl)
         {
-            var host = new Uri(remoteUrl).Host;
-
-            if (host.Equals("bitbucket", StringComparison.InvariantCultureIgnoreCase))
-                return SupportedStrategies.First(s => s is BitBucketStrategy);
-
-            return null;
+            return SupportedStrategies.FirstOrDefault(s => s.IsMatch(remoteUrl));
         }
     }    
 }

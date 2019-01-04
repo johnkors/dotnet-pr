@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using LibGit2Sharp;
 
-namespace pr
+namespace PR
 {
     class Program
     {
@@ -40,8 +40,6 @@ namespace pr
                 Console.WriteLine($"Unknown VCS code review tool for remote {remoteTrackedBranch}");
                 Environment.Exit(-1);
             }
-            
         }
-
     }
 }

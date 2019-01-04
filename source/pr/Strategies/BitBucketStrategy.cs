@@ -1,19 +1,22 @@
 using System;
 
-namespace pr
+namespace PR
 {
-    public class BitBucketStrategy : IVCSStrategy
+    internal class BitBucketStrategy : IVCSStrategy
     {
-   
-        
-        public string TransformToPRUrl(string gitRemoteUrl, string branch)
+        public bool IsMatch(string remoteUrl)
+        {
+            return new Uri(remoteUrl).Host.Equals("bitbucket", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public string TransformToPRUrl(string gitRemoteUrl, string currentBranch)
         {
             var uri = new Uri(gitRemoteUrl);
             if (uri.Scheme == "ssh")
             {
-                return PrUrl(branch, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
+                return PrUrl(currentBranch, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
             }
-            return PrUrl(branch, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
+            return PrUrl(currentBranch, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
         }
 
         private static string PrUrl(string branch, Uri uri, Func<Uri,string> ProjectFetcher, Func<Uri, string> RepoFetcher)

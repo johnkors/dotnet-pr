@@ -1,7 +1,8 @@
-namespace pr
+namespace PR
 {
     public interface IVCSStrategy
     {
-        string TransformToPRUrl(string gitRemoteUrl, string branch);
+        string TransformToPRUrl(string gitRemoteUrl, string currentBranch);
+        bool IsMatch(string remoteUrl);
     }
 }

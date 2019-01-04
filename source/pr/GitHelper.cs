@@ -1,7 +1,7 @@
 using System.IO;
 using LibGit2Sharp;
 
-namespace pr
+namespace PR
 {
     internal static class GitHelper
     {
@@ -13,12 +13,10 @@ namespace pr
             }
             
             try{
-                var r =  new Repository(currentDirectory);
-                return r;
+                return new Repository(currentDirectory);
             }
             catch(RepositoryNotFoundException){
-                var parentDirectory = Directory.GetParent(currentDirectory);
-                return GetRepository(parentDirectory.FullName);
+                return GetRepository(Directory.GetParent(currentDirectory).FullName);
             }
         }
     }
