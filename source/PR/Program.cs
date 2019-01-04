@@ -2,11 +2,11 @@
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
+using PR.PRTools;
 
 namespace PR
 {
-    partial class Program
+    class Program
     {
         static void Main(string[] args)
         {
@@ -25,11 +25,10 @@ namespace PR
             }
         }
 
-        public static ServiceProvider Bootstrap(string[] args)
+        private static ServiceProvider Bootstrap(string[] args)
         {
             var enableDebug = args.Contains("--debug");
             var debugOptions = new DebugOptions { EnableDebug = enableDebug };
-            
 
             var services = new ServiceCollection()
                 .AddLogging(c =>
@@ -48,8 +47,8 @@ namespace PR
                 })
                 .AddSingleton(debugOptions)
                 .AddSingleton<GitHelper>()
-                .AddSingleton<IVCSStrategy,BitBucketStrategy>()
-                .AddSingleton<IVCSStrategy,GitHubStrategy>()
+                .AddSingleton<IPRTool,BitBucket>()
+                .AddSingleton<IPRTool,GitHub>()
                 .AddSingleton<PRToolFactory>()
                 .AddSingleton<Browser>()
                 .AddSingleton<Runner>();

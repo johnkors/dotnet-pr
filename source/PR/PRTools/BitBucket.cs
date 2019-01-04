@@ -1,31 +1,24 @@
 using System;
 
-namespace PR
+namespace PR.PRTools
 {
-    internal class BitBucketStrategy : IVCSStrategy
+    internal class BitBucket : IPRTool
     {
         public bool IsMatch(string remoteUrl)
         {
-            Uri theUri;
-            var couldCreate = Uri.TryCreate(remoteUrl, UriKind.Absolute, out theUri);
-            if (couldCreate)
-            {
-                var sshUrlMatch = remoteUrl.StartsWith("ssh://git@bitbucket", StringComparison.InvariantCultureIgnoreCase);
-                var httpUrlMatch = remoteUrl.StartsWith("http://bitbucket/scm", StringComparison.InvariantCultureIgnoreCase);
-                return sshUrlMatch || httpUrlMatch;
-            }
-                
-            return false;
+            var sshUrlMatch = remoteUrl.StartsWith("ssh://git@bitbucket", StringComparison.InvariantCultureIgnoreCase);
+            var httpUrlMatch = remoteUrl.StartsWith("http://bitbucket/scm", StringComparison.InvariantCultureIgnoreCase);
+            return sshUrlMatch || httpUrlMatch;
         }
 
-        public string CreatePRUrl(string gitRemoteUrl, string currentBranch)
+        public string CreatePRUrl(PRInfo PRinfo)
         {
-            var uri = new Uri(gitRemoteUrl);
+            var uri = new Uri(PRinfo.RemoteUrl);
             if (uri.Scheme == "ssh")
             {
-                return PrUrl(currentBranch, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
+                return PrUrl(PRinfo.BranchName, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
             }
-            return PrUrl(currentBranch, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
+            return PrUrl(PRinfo.BranchName, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
         }
 
         private static string PrUrl(string branch, Uri uri, Func<Uri,string> ProjectFetcher, Func<Uri, string> RepoFetcher)

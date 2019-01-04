@@ -1,19 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PR
+namespace PR.PRTools
 {
     internal class PRToolFactory
     {
-        private IEnumerable<IVCSStrategy> _supportedStrategies;
+        private IEnumerable<IPRTool> _supportedStrategies;
 
-        public PRToolFactory(IEnumerable<IVCSStrategy> strategies)
+        public PRToolFactory(IEnumerable<IPRTool> strategies)
         {
             _supportedStrategies = strategies;
         }
         
-        public IVCSStrategy CreatePRTool(string remoteUrl)
+        public IPRTool CreatePRTool(string remoteUrl)
         {
             return _supportedStrategies.FirstOrDefault(s => s.IsMatch(remoteUrl));
         }

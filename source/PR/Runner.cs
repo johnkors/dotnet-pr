@@ -1,4 +1,5 @@
 using System;
+using PR.PRTools;
 
 namespace PR
 {
@@ -16,23 +17,18 @@ namespace PR
         }
         public void Run()
         {
-            var repo = _git.GetRepository();
-            if (repo == null)
-            {
-                throw new ApplicationException("No Git repo found!");
-            }
+            _git.LocateRepository();
 
-            var branch = repo.Head.FriendlyName;
-            var remote = _git.ResolveRemote(repo, branch);
+            var prInfo = _git.GuessRemoteForPR();
 
-            var prTool = _factory.CreatePRTool(remote.Url);
+            var prTool = _factory.CreatePRTool(prInfo.RemoteUrl);
 
             if (prTool == null)
             {
-                throw new ApplicationException($"Unknown PR tool! Cannot not open PR UI for remote {remote.Name}. ");
+                throw new ApplicationException($"Unknown PR tool! Cannot not open PR UI for remote {prInfo.RemoteName}. ");
             }
 
-            var prUrl = prTool.CreatePRUrl(remote.Url, branch);
+            var prUrl = prTool.CreatePRUrl(prInfo);
             _browser.Open(prUrl);
         }
     }
