@@ -2,14 +2,11 @@ using System;
 
 namespace pr
 {
-    public class BitBucketHelper
+    public class BitBucketStrategy : IVCSStrategy
     {
-        public static bool IsBitBucketUrl(string gitRemoteUrl)
-        {
-            return new Uri(gitRemoteUrl).Host.Equals("bitbucket", StringComparison.InvariantCultureIgnoreCase);
-        }
+   
         
-        public static string TransformToPRUrl(string gitRemoteUrl, string branch)
+        public string TransformToPRUrl(string gitRemoteUrl, string branch)
         {
             var uri = new Uri(gitRemoteUrl);
             if (uri.Scheme == "ssh")

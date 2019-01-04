@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -37,7 +38,7 @@ namespace pr
             }
             else
             {
-                Console.Info(url);
+                Console.WriteLine(url);
             }
         }
     }
