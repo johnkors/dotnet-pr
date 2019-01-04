@@ -2,19 +2,37 @@ using System;
 using System.IO;
 using System.Linq;
 using LibGit2Sharp;
+using Microsoft.Extensions.Logging;
 
 namespace PR
 {
-    internal static class GitHelper
+    internal class GitHelper
     {
-        public static Repository GetRepository(string currentDirectory)
-        {   
+        private readonly string _initialDirectory;
+        private readonly ILogger<GitHelper> _logger;
+    
+        public GitHelper(ILogger<GitHelper> logger)
+        {
+            _logger = logger;
+            _initialDirectory = Directory.GetCurrentDirectory();
 
-            try{
+        }
+
+        public Repository GetRepository()
+        {
+            return GetRepository(_initialDirectory);
+        }
+
+        private Repository GetRepository(string currentDirectory)
+        {   
+            _logger.LogDebug("Searching for git repo in " + currentDirectory);
+
+            try
+            {
                 return new Repository(currentDirectory);
             }
             catch(RepositoryNotFoundException){
-                Console.WriteLine("Going down rabbit hole " + currentDirectory);
+                
 
                 try
                 {
@@ -27,37 +45,43 @@ namespace PR
                     {
                         return null;
                     }
-                }catch(Exception){
+                }
+                catch(Exception)
+                {
                     return null;
                 }
-                
-                return GetRepository(Directory.GetParent(currentDirectory).FullName);
+
+                var parentDir = Directory.GetParent(currentDirectory).FullName;
+                return GetRepository(parentDir);
             }
         }
         
-        public static Remote ResolveRemote(Repository repo, string branch)
+        public Remote ResolveRemote(Repository repo, string localBranch)
         {
-            string remoteName = "origin";
+            var remoteName = "origin";
             if (repo.Head.TrackedBranch != null)
             {
                 remoteName = repo.Head.TrackedBranch.RemoteName;
-                Console.WriteLine("Found tracking branch. Using connected remote.");
+                _logger.LogDebug("Found tracking branch. Using connected remote.");
             }
             else
             {
-                Console.WriteLine("No tracking branch. Searching for pushed branches at remotes.");
+                _logger.LogDebug("No tracking branch found. Searching remotes.");
 
                 foreach (var repoBranch in repo.Branches.Where(r => r.IsRemote))
                 {
-                    if (repoBranch.FriendlyName.Replace($"{repoBranch.RemoteName}/", "") == branch)
+                    var shortName = repoBranch.FriendlyName.Replace($"{repoBranch.RemoteName}/", "");
+                    if (shortName == localBranch)
                     {
-                        Console.WriteLine($"Found branch at remote : {repoBranch.FriendlyName}.");
+                        _logger.LogDebug($"Found branch at remote {repoBranch.RemoteName} : {repoBranch.FriendlyName}.");
                         remoteName = repoBranch.RemoteName;
                     }
                 }
             }
 
-            return repo.Network.Remotes.First(r => r.Name == remoteName);
+            var remote = repo.Network.Remotes.First(r => r.Name == remoteName);
+            _logger.LogDebug($"Using {remoteName}");
+            return remote;
         }
     }
 }

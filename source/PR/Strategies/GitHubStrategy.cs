@@ -4,7 +4,7 @@ namespace PR
 {
     public class GitHubStrategy : IVCSStrategy
     {
-        public string TransformToPRUrl(string gitRemoteUrl, string currentBranch)
+        public string CreatePRUrl(string gitRemoteUrl, string currentBranch)
         {
             return $"https://github.com/{GetOrganization(gitRemoteUrl)}/{GetRepo(gitRemoteUrl)}/compare/master...{currentBranch}";
         }

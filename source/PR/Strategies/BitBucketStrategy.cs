@@ -18,7 +18,7 @@ namespace PR
             return false;
         }
 
-        public string TransformToPRUrl(string gitRemoteUrl, string currentBranch)
+        public string CreatePRUrl(string gitRemoteUrl, string currentBranch)
         {
             var uri = new Uri(gitRemoteUrl);
             if (uri.Scheme == "ssh")
