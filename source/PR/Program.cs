@@ -1,41 +1,59 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using LibGit2Sharp;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using PR.PRTools;
 
 namespace PR
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            Console.WriteLine($"pwd: {currentDirectory}");
-            var repo = GitHelper.GetRepository(currentDirectory);
-            if (repo == null)
+            using (var serviceProvider = Bootstrap(args))
             {
-                Console.WriteLine("No Git repo found!");
-                Environment.Exit(-1);
+                var runner = serviceProvider.GetService<Runner>();
+                try
+                {
+                    runner.Run();
+                }
+                catch (ApplicationException ae)
+                {
+                    var logger = serviceProvider.GetService<ILogger<Program>>();
+                    logger.LogError(ae.Message);
+                }
             }
+        }
 
-            var branch = repo.Head.FriendlyName;
-            
-            var remote = GitHelper.ResolveRemote(repo, branch);
+        private static ServiceProvider Bootstrap(string[] args)
+        {
+            var enableDebug = args.Contains("--debug");
+            var debugOptions = new DebugOptions { EnableDebug = enableDebug };
 
+            var services = new ServiceCollection()
+                .AddLogging(c =>
+                {
+                    c.AddConsole().AddDebug();
+                    
+                    if (debugOptions.EnableDebug)
+                    {
+                        c.SetMinimumLevel(LogLevel.Trace);
+                    }
+                    else
+                    {
+                        c.SetMinimumLevel(LogLevel.Warning);
+                    }
+                    
+                })
+                .AddSingleton(debugOptions)
+                .AddSingleton<GitHelper>()
+                .AddSingleton<IPRTool,BitBucket>()
+                .AddSingleton<IPRTool,GitHub>()
+                .AddSingleton<PRToolFactory>()
+                .AddSingleton<Browser>()
+                .AddSingleton<Runner>();
 
-            var strategy = StrategyHelper.GetVCSStrategy(remote.Url);
-
-            if (strategy != null)
-            {
-                var prUrl = strategy.TransformToPRUrl(remote.Url, branch);
-                Browser.Open(prUrl);
-                Environment.Exit(0);
-            }
-            else
-            {
-                Console.WriteLine($"Unknown VCS code review tool for remote {remote.Name}");
-                Environment.Exit(-1);
-            }
+            return services.BuildServiceProvider();
         }
     }
 }

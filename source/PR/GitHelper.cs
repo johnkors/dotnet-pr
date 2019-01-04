@@ -2,20 +2,78 @@ using System;
 using System.IO;
 using System.Linq;
 using LibGit2Sharp;
+using Microsoft.Extensions.Logging;
 
 namespace PR
 {
-    internal static class GitHelper
+    internal class GitHelper
     {
-        public static Repository GetRepository(string currentDirectory)
-        {   
+        private readonly string _initialDirectory;
+        private readonly ILogger<GitHelper> _logger;
+    
+        public GitHelper(ILogger<GitHelper> logger)
+        {
+            _logger = logger;
+            _initialDirectory = Directory.GetCurrentDirectory();
+        }
 
-            try{
+        public Repository Repository { get; set; }
+
+        public void LocateRepository()
+        {
+            Repository = LocateRepository(_initialDirectory);
+            if (Repository == null)
+            {
+                throw new ApplicationException("No Git repo found!");
+            }
+        }
+
+        public PRInfo GuessRemoteForPR()
+        {
+            var localBranch = Repository.Head.FriendlyName;
+
+            var remoteName = "origin";
+            if (Repository.Head.TrackedBranch != null)
+            {
+                remoteName = Repository.Head.TrackedBranch.RemoteName;
+                _logger.LogDebug("Found tracking branch. Using connected remote.");
+            }
+            else
+            {
+                _logger.LogDebug("No tracking branch found. Searching remotes.");
+
+                foreach (var repoBranch in Repository.Branches.Where(r => r.IsRemote))
+                {
+                    var shortName = repoBranch.FriendlyName.Replace($"{repoBranch.RemoteName}/", "");
+                    if (shortName == localBranch)
+                    {
+                        _logger.LogDebug($"Found branch at remote {repoBranch.RemoteName} : {repoBranch.FriendlyName}.");
+                        remoteName = repoBranch.RemoteName;
+                    }
+                }
+            }
+
+            var remote = Repository.Network.Remotes.First(r => r.Name == remoteName);
+            _logger.LogDebug($"Using the {remoteName} remote");
+            
+            return new PRInfo
+            {
+                RemoteName = remote.Name,
+                RemoteUrl = remote.Url,
+                BranchName = localBranch
+            };
+        }
+
+        private Repository LocateRepository(string currentDirectory)
+        {   
+            _logger.LogDebug("Searching for git repo in " + currentDirectory);
+
+            try
+            {
                 return new Repository(currentDirectory);
             }
-            catch(RepositoryNotFoundException){
-                Console.WriteLine("Going down rabbit hole " + currentDirectory);
-
+            catch(RepositoryNotFoundException)
+            {
                 try
                 {
                     if (Directory.GetParent(currentDirectory) == null)
@@ -27,37 +85,15 @@ namespace PR
                     {
                         return null;
                     }
-                }catch(Exception){
+                }
+                catch(Exception)
+                {
                     return null;
                 }
-                
-                return GetRepository(Directory.GetParent(currentDirectory).FullName);
-            }
-        }
-        
-        public static Remote ResolveRemote(Repository repo, string branch)
-        {
-            string remoteName = "origin";
-            if (repo.Head.TrackedBranch != null)
-            {
-                remoteName = repo.Head.TrackedBranch.RemoteName;
-                Console.WriteLine("Found tracking branch. Using connected remote.");
-            }
-            else
-            {
-                Console.WriteLine("No tracking branch. Searching for pushed branches at remotes.");
 
-                foreach (var repoBranch in repo.Branches.Where(r => r.IsRemote))
-                {
-                    if (repoBranch.FriendlyName.Replace($"{repoBranch.RemoteName}/", "") == branch)
-                    {
-                        Console.WriteLine($"Found branch at remote : {repoBranch.FriendlyName}.");
-                        remoteName = repoBranch.RemoteName;
-                    }
-                }
+                var parentDir = Directory.GetParent(currentDirectory).FullName;
+                return LocateRepository(parentDir);
             }
-
-            return repo.Network.Remotes.First(r => r.Name == remoteName);
         }
     }
 }

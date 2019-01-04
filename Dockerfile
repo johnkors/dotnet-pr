@@ -12,8 +12,9 @@ RUN dotnet pack -o ../../builds/PR /p:Version=999.0.0 -c Debug --no-build
 WORKDIR /
 RUN dotnet tool install -g dotnet-pr --add-source ./builds/PR --version=999.0.0
 ENV PATH="/root/.dotnet/tools:${PATH}"
+RUN git status
 
 RUN dotnet tool list -g
 WORKDIR /source/PR/Strategies
 RUN pwd
-RUN pr 
+RUN pr --debug
