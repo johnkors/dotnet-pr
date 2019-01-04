@@ -8,13 +8,12 @@ WORKDIR /source/PR
 RUN dotnet build -c Debug
 RUN dotnet pack -o ../../builds/PR /p:Version=999.0.0 -c Debug --no-build
 
-# install dotnet-retire from local feed
+# install dotnet-pr from local feed
 WORKDIR /
 RUN dotnet tool install -g dotnet-pr --add-source ./builds/PR --version=999.0.0
 ENV PATH="/root/.dotnet/tools:${PATH}"
-RUN git status
 
 RUN dotnet tool list -g
 WORKDIR /source/PR/Strategies
-RUN pwd
 RUN pr --debug
+RUN pr
