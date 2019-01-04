@@ -1,6 +1,7 @@
 var target = Argument("target", "Pack");
 var project = "PR";
-var version = GetBuildVersion("1.2");
+var nugetpackageId = "dotnet-pr";
+var version = GetBuildVersion("1.0");
 var outputDir = $"./builds/{project}";
 
 Task("Pack")
@@ -25,7 +26,7 @@ Task("Publish")
             ApiKey = EnvironmentVariable("NUGET_API_KEY")
         };
 
-        DotNetCoreNuGetPush($"{outputDir}/{project}.{version}.nupkg", settings);
+        DotNetCoreNuGetPush($"{outputDir}/{nugetpackageId}.{version}.nupkg", settings);
 });
 
 private string GetBuildVersion(string productVersion)
@@ -40,7 +41,7 @@ private string GetBuildVersion(string productVersion)
     } 
     else
     {
-        return $"{productVersion}.{buildCounter}-feta010";//{now}";
+        return $"{productVersion}.{buildCounter}-beta{now}";
     }
 }
 
