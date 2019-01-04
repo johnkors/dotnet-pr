@@ -4,9 +4,6 @@ namespace PR
 {
     public class GitHubStrategy : IVCSStrategy
     {
-        /// <summary>
-        /// git@github.com:johnkors/cmdline-utilities.git
-        /// </summary>
         public string TransformToPRUrl(string gitRemoteUrl, string currentBranch)
         {
             return $"https://github.com/{GetOrganization(gitRemoteUrl)}/{GetRepo(gitRemoteUrl)}/compare/master...{currentBranch}";
@@ -28,7 +25,6 @@ namespace PR
 
         public bool IsMatch(string remoteUrl)
         {
-            Console.WriteLine(remoteUrl);
             return remoteUrl.StartsWith("git@github.com");
         }
     }

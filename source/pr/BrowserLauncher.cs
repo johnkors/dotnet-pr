@@ -6,7 +6,7 @@ namespace PR
 {
     internal static class Browser
     {
-        public static void Open(string url, bool launch = true)
+        public static void Open(string url, bool launch = false)
         {
             if (launch)
             {
