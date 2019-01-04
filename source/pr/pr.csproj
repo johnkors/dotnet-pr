@@ -16,7 +16,6 @@
     <PackageIconUrl>https://raw.githubusercontent.com/johnkors/cmdline-utilities/master/images/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>Adds PR tool. Supports BitBucket (on-prem:Stash) + GitHub </PackageReleaseNotes>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
 
   <ItemGroup>

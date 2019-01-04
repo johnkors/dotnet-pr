@@ -8,16 +8,29 @@ namespace PR
     internal static class GitHelper
     {
         public static Repository GetRepository(string currentDirectory)
-        {
-            if (!Directory.GetParent(currentDirectory).Exists)
-            {
-                return null;
-            }
-            
+        {   
+
             try{
                 return new Repository(currentDirectory);
             }
             catch(RepositoryNotFoundException){
+                Console.WriteLine("Going down rabbit hole " + currentDirectory);
+
+                try
+                {
+                    if (Directory.GetParent(currentDirectory) == null)
+                    {
+                        return null;
+                    }
+
+                    if(!Directory.GetParent(currentDirectory).Exists)
+                    {
+                        return null;
+                    }
+                }catch(Exception){
+                    return null;
+                }
+                
                 return GetRepository(Directory.GetParent(currentDirectory).FullName);
             }
         }

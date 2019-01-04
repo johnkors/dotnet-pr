@@ -9,7 +9,9 @@ namespace PR
     {
         static void Main()
         {
-            var repo = GitHelper.GetRepository(Directory.GetCurrentDirectory());
+            var currentDirectory = Directory.GetCurrentDirectory();
+            Console.WriteLine($"pwd: {currentDirectory}");
+            var repo = GitHelper.GetRepository(currentDirectory);
             if (repo == null)
             {
                 Console.WriteLine("No Git repo found!");
@@ -35,7 +37,5 @@ namespace PR
                 Environment.Exit(-1);
             }
         }
-
-
     }
 }

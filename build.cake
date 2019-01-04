@@ -1,6 +1,6 @@
 var target = Argument("target", "Pack");
 var project = "PR";
-var version = GetBuildVersion("1.0");
+var version = GetBuildVersion("1.2");
 var outputDir = $"./builds/{project}";
 
 Task("Pack")
@@ -40,7 +40,7 @@ private string GetBuildVersion(string productVersion)
     } 
     else
     {
-        return $"{productVersion}.{buildCounter}-beta{now}";
+        return $"{productVersion}.{buildCounter}-feta010";//{now}";
     }
 }
 
