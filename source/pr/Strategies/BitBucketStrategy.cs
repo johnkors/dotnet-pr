@@ -10,8 +10,8 @@ namespace PR
             var couldCreate = Uri.TryCreate(remoteUrl, UriKind.Absolute, out theUri);
             if (couldCreate)
             {
-                var sshUrlMatch = theUri.Host.StartsWith("ssh://git@bitbucket", StringComparison.InvariantCultureIgnoreCase);
-                var httpUrlMatch = theUri.Host.StartsWith("http://bitbucket/scm", StringComparison.InvariantCultureIgnoreCase);
+                var sshUrlMatch = remoteUrl.StartsWith("ssh://git@bitbucket", StringComparison.InvariantCultureIgnoreCase);
+                var httpUrlMatch = remoteUrl.StartsWith("http://bitbucket/scm", StringComparison.InvariantCultureIgnoreCase);
                 return sshUrlMatch || httpUrlMatch;
             }
                 

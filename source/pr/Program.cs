@@ -17,15 +17,9 @@ namespace PR
             }
 
             var branch = repo.Head.FriendlyName;
-            if (repo.Head.TrackedBranch == null)
-            {
-                Console.WriteLine($"No tracking branch. Missing `git push -u origin {branch}` ?");
-                Environment.Exit(-1);
-            }
             
-            var remoteTrackedBranch = repo.Head.TrackedBranch.RemoteName;
-            var remote = repo.Network.Remotes.First(r => r.Name.Equals(remoteTrackedBranch));
-            
+            var remote = GitHelper.ResolveRemote(repo, branch);
+
 
             var strategy = StrategyHelper.GetVCSStrategy(remote.Url);
 
@@ -37,9 +31,11 @@ namespace PR
             }
             else
             {
-                Console.WriteLine($"Unknown VCS code review tool for remote {remoteTrackedBranch}");
+                Console.WriteLine($"Unknown VCS code review tool for remote {remote.Name}");
                 Environment.Exit(-1);
             }
         }
+
+
     }
 }

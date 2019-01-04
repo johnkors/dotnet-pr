@@ -6,10 +6,13 @@ namespace PR
 {
     internal static class Browser
     {
-        public static void Open(string url, bool launch = true)
+        public static void Open(string url)
         {
-            if (launch)
-            {
+            
+            #if DEBUG
+            Console.WriteLine(url);
+            #else
+            
                 try
                 {
                     Process.Start(url);
@@ -35,11 +38,7 @@ namespace PR
                         throw;
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine(url);
-            }
+            #endif
         }
     }
 }
