@@ -3,7 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <PackageId>pr</PackageId>
+    <PackageId>dotnet-pr</PackageId>
+    <ToolCommandName>pr</ToolCommandName>  
     <Authors>John Korsnes</Authors>
     <Description>A tool to launch the PR view of any VCS</Description>
     <Copyright>John Korsnes</Copyright>
