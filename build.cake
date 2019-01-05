@@ -37,7 +37,7 @@ private string GetBuildVersion(string productVersion)
     if(shipit)
     {
         return $"{productVersion}";
-    } 
+    }
     else
     {
         return $"{productVersion}-beta{now}";
