@@ -6,7 +6,7 @@ namespace PR.PRTools
     {
         public bool IsMatch(string remoteUrl)
         {
-            return remoteUrl.StartsWith("git@bitbucket.org", StringComparison.InvariantCultureIgnoreCase);
+            return remoteUrl.Contains("@bitbucket.org", StringComparison.InvariantCultureIgnoreCase);
         }
 
         public string CreatePRUrl(PRInfo PRinfo)
@@ -28,9 +28,7 @@ namespace PR.PRTools
        
         private static string PrUrl(string account, string repo, string branch)
         {
-            return $"http://bitbucket.org/{account}/{repo}/pull-requests/new?source={branch}&t=1";
+            return $"https://bitbucket.org/{account}/{repo}/pull-requests/new?source={branch}&t=1";
         }
-
-
     }
 }
