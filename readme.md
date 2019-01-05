@@ -30,5 +30,6 @@ After install, navigate to a git repo and call `pr` from the terminal.
 ## Supported PR tools
 
 * github.com
-* Bitbucket (Self-Hosted)
 * bitbucket.org
+* gitlab.com
+* (Bitbucket (Self-Hosted))
