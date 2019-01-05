@@ -1,7 +1,7 @@
 var target = Argument("target", "Pack");
 var project = "PR";
 var nugetpackageId = "dotnet-pr";
-var version = GetBuildVersion("1.1");
+var version = GetBuildVersion("1.1.2");
 var outputDir = $"./builds/{project}";
 
 Task("Pack")
@@ -32,16 +32,15 @@ Task("Publish")
 private string GetBuildVersion(string productVersion)
 {
     var now = DateTime.Now.ToString("yyyyMMddHHmmss");
-    var buildCounter = Argument("buildcounter", "0");
     var shipit = Argument("shipit", "0") != "0";
 
     if(shipit)
     {
-        return $"{productVersion}.{buildCounter}";
+        return $"{productVersion}";
     } 
     else
     {
-        return $"{productVersion}.{buildCounter}-beta{now}";
+        return $"{productVersion}-beta{now}";
     }
 }
 
