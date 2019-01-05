@@ -10,10 +10,10 @@
     <Copyright>John Korsnes</Copyright>
     <PackageTags>dotnet;global-tools;pull-request;git;git-flow</PackageTags>
     <PackAsTool>true</PackAsTool>
-    <PackageProjectUrl>https://github.com/johnkors/cmdline-utilities/</PackageProjectUrl>
-    <License>https://raw.githubusercontent.com/johnkors/cmdline-utilities/master/LICENSE</License>
-    <RepositoryUrl>https://github.com/johnkors/cmdline-utilities</RepositoryUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/johnkors/cmdline-utilities/master/images/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/johnkors/dotnet-pr/</PackageProjectUrl>
+    <License>https://raw.githubusercontent.com/johnkors/dotnet-pr/master/LICENSE</License>
+    <RepositoryUrl>https://github.com/johnkors/dotnet-pr</RepositoryUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/johnkors/dotnet-pr/master/images/nuget/dotnet-pr/icon.768x1024.svg</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>Adds PR tool. Supports BitBucket (on-prem:Stash) + GitHub </PackageReleaseNotes>
     </PropertyGroup>
