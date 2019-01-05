@@ -2,7 +2,7 @@ using System;
 
 namespace PR.PRTools
 {
-    internal class BitBucket : IPRTool
+    internal class BitBucketSelfHosted : IPRTool
     {
         public bool IsMatch(string remoteUrl)
         {

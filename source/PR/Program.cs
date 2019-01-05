@@ -47,7 +47,7 @@ namespace PR
                 })
                 .AddSingleton(debugOptions)
                 .AddSingleton<GitHelper>()
-                .AddSingleton<IPRTool,BitBucket>()
+                .AddSingleton<IPRTool,BitBucketSelfHosted>()
                 .AddSingleton<IPRTool,GitHub>()
                 .AddSingleton<PRToolFactory>()
                 .AddSingleton<Browser>()
