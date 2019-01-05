@@ -11,37 +11,26 @@ namespace PR.PRTools
 
         public string CreatePRUrl(PRInfo PRinfo)
         {
-            var uri = new Uri(PRinfo.RemoteUrl);
-            if (uri.Scheme == "ssh")
+            if (PRinfo.RemoteUrl.StartsWith("http"))
             {
-                return PrUrl(PRinfo.BranchName, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
+                //https://johnkors@bitbucket.org/johnkors/dotnet-pr.git
+                var accountAndRepo = PRinfo.RemoteUrl.Split("bitbucket.org/")[1];
+                var account = accountAndRepo.Split("/")[0];
+                var repo = accountAndRepo.Split("/")[1].Replace(".git", "");
+                return PrUrl(account, repo, PRinfo.BranchName);
             }
-            return PrUrl(PRinfo.BranchName, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
+            // git@bitbucket.org:johnkors/dotnet-pr.git
+            var accountAndRepoSsh = PRinfo.RemoteUrl.Split("bitbucket.org:")[1];
+            var accountSsh = accountAndRepoSsh.Split("/")[0];
+            var repoSsh = accountAndRepoSsh.Split("/")[1].Replace(".git", "");
+            return PrUrl(accountSsh, repoSsh, PRinfo.BranchName);
+        }
+       
+        private static string PrUrl(string account, string repo, string branch)
+        {
+            return $"http://bitbucket.org/{account}/{repo}/pull-requests/new?source={branch}&t=1";
         }
 
-        private static string PrUrl(string branch, Uri uri, Func<Uri,string> ProjectFetcher, Func<Uri, string> RepoFetcher)
-        {
-            return $"http://{uri.Host}/projects/{ProjectFetcher(uri)}/repos/{RepoFetcher(uri)}/compare/commits?sourceBranch={branch}";
-        }
 
-        private static string ParseRepoFromSSHUri(Uri uri)
-        {
-            return uri.Segments[2].Replace(".git", "",StringComparison.InvariantCultureIgnoreCase).TrimStart('/').TrimEnd('/');
-        }
-
-        private static string ParseProjectFromSSHUri(Uri uri)
-        {
-            return uri.Segments[1].TrimStart('/').TrimEnd('/');
-        }
-        
-        private static string ParseProjectFromHttpUri(Uri uri)
-        {
-            return uri.Segments[2].TrimStart('/').TrimEnd('/');
-        }
-        
-        private static string ParseRepoFromHttpUri(Uri uri)
-        {
-            return uri.Segments[3].Replace(".git", "",StringComparison.InvariantCultureIgnoreCase).TrimStart('/').TrimEnd('/');
-        }
     }
 }
