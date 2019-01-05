@@ -31,3 +31,4 @@ After install, navigate to a git repo and call `pr` from the terminal.
 
 * github.com
 * Bitbucket (Self-Hosted)
+* bitbucket.org
