@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <PackageId>dotnet-pr</PackageId>
-    <ToolCommandName>pr</ToolCommandName>  
+    <ToolCommandName>pr</ToolCommandName>
     <Authors>John Korsnes</Authors>
-    <Description>A tool to launch the PR view of any VCS</Description>
+    <Description>A tool to launch the PR view of any VCS in a browser</Description>
     <Copyright>John Korsnes</Copyright>
     <PackageTags>dotnet;global-tools;pull-request;git;git-flow</PackageTags>
     <PackAsTool>true</PackAsTool>
@@ -15,14 +14,14 @@
     <RepositoryUrl>https://github.com/johnkors/dotnet-pr</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/johnkors/dotnet-pr/master/images/nuget/dotnet-pr/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Adds PR tool. Supports BitBucket (on-prem:Stash) + GitHub </PackageReleaseNotes>
+    <PackageReleaseNotes>Adds PR tool</PackageReleaseNotes>
     </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="LibGit2Sharp" Version="0.25.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />    
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

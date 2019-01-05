@@ -36,7 +36,7 @@ namespace PR
             if (Repository.Head.TrackedBranch != null)
             {
                 remoteName = Repository.Head.TrackedBranch.RemoteName;
-                _logger.LogDebug("Found tracking branch. Using connected remote.");
+                _logger.LogDebug($"Found tracking branch. Using connected remote {remoteName}");
             }
             else
             {
