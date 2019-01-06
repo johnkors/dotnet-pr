@@ -51,6 +51,7 @@ namespace PR
                 .AddSingleton<IPRTool,GitHub>()
                 .AddSingleton<IPRTool,BitBucketOrg>()
                 .AddSingleton<IPRTool,GitLab>()
+                .AddSingleton<IPRTool,AzureDevOps>()
                 .AddSingleton<PRToolFactory>()
                 .AddSingleton<Browser>()
                 .AddSingleton<Runner>();
