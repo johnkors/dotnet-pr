@@ -11,13 +11,13 @@ namespace PR.PRTools
             return remoteUrl.Contains("dev.azure.com");
         }
 
-        public string CreatePRUrl(GitContext gitContext)
+        public string BuildUrl(GitContext gitContext)
         {
             if (gitContext.RemoteUrl.StartsWith("git@ssh"))
             {
-                return $"https://dev.azure.com/{GetOrganization(gitContext.RemoteUrl)}/_git/{GetRepo(gitContext.RemoteUrl)}/pullrequestcreate?targetRef=master&sourceRef={gitContext.BranchName}";
+                return $"https://dev.azure.com/{GetOrganization(gitContext.RemoteUrl)}/_git/{GetRepo(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
             }
-            return $"https://dev.azure.com/{GetOrganizationHttp(gitContext.RemoteUrl)}/_git/{GetRepoHttp(gitContext.RemoteUrl)}/pullrequestcreate?targetRef=master&sourceRef={gitContext.BranchName}";
+            return $"https://dev.azure.com/{GetOrganizationHttp(gitContext.RemoteUrl)}/_git/{GetRepoHttp(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
         }
         
         private string GetOrganizationHttp(string gitRemoteUrl)

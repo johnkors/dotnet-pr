@@ -4,26 +4,28 @@ namespace PR.PRTools
 {
     internal class Gitlab : IPRTool
     {
+        /// <param name="remoteUrl">
+        /// https://gitlab.com/johnkors/dotnet-pr.git
+        /// git@gitlab.com:johnkors/dotnet-pr.git
+        /// </param>
         public bool IsMatch(string remoteUrl)
         {
             return remoteUrl.Contains("@gitlab.com", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public string CreatePRUrl(GitContext PRinfo)
+        public string BuildUrl(GitContext gitContext)
         {
-            if (PRinfo.RemoteUrl.StartsWith("http"))
+            if (gitContext.RemoteUrl.StartsWith("http"))
             {
-                //https://gitlab.com/johnkors/dotnet-pr.git
-                var accountAndRepo = PRinfo.RemoteUrl.Split("gitlab.com/")[1];
+                var accountAndRepo = gitContext.RemoteUrl.Split("gitlab.com/")[1];
                 var account = accountAndRepo.Split("/")[0];
                 var repo = accountAndRepo.Split("/")[1].Replace(".git", "");
-                return PrUrl(account, repo, PRinfo.BranchName);
+                return PrUrl(account, repo, gitContext.SourceBranch);
             }
-            // git@gitlab.com:johnkors/dotnet-pr.git
-            var accountAndRepoSsh = PRinfo.RemoteUrl.Split("gitlab.com:")[1];
+            var accountAndRepoSsh = gitContext.RemoteUrl.Split("gitlab.com:")[1];
             var accountSsh = accountAndRepoSsh.Split("/")[0];
             var repoSsh = accountAndRepoSsh.Split("/")[1].Replace(".git", "");
-            return PrUrl(accountSsh, repoSsh, PRinfo.BranchName);
+            return PrUrl(accountSsh, repoSsh, gitContext.SourceBranch);
         }
        
         private static string PrUrl(string account, string repo, string branch)

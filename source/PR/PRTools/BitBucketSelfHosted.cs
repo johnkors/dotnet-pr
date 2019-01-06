@@ -15,14 +15,14 @@ namespace PR.PRTools
             return sshUrlMatch || httpUrlMatch;
         }
 
-        public string CreatePRUrl(GitContext PRinfo)
+        public string BuildUrl(GitContext gitContext)
         {
-            var uri = new Uri(PRinfo.RemoteUrl);
+            var uri = new Uri(gitContext.RemoteUrl);
             if (uri.Scheme == "ssh")
             {
-                return PrUrl(PRinfo.BranchName, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
+                return PrUrl(gitContext.SourceBranch, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
             }
-            return PrUrl(PRinfo.BranchName, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
+            return PrUrl(gitContext.SourceBranch, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
         }
 
         private static string PrUrl(string branch, Uri uri, Func<Uri,string> ProjectFetcher, Func<Uri, string> RepoFetcher)

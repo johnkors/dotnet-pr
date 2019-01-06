@@ -13,19 +13,19 @@ namespace PR.PRTools
             return remoteUrl.Contains("@bitbucket.org", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public string CreatePRUrl(GitContext PRinfo)
+        public string BuildUrl(GitContext gitContext)
         {
-            if (PRinfo.RemoteUrl.StartsWith("http"))
+            if (gitContext.RemoteUrl.StartsWith("http"))
             {
-                var accountAndRepo = PRinfo.RemoteUrl.Split("bitbucket.org/")[1];
+                var accountAndRepo = gitContext.RemoteUrl.Split("bitbucket.org/")[1];
                 var account = accountAndRepo.Split("/")[0];
                 var repo = accountAndRepo.Split("/")[1].Replace(".git", "");
-                return PrUrl(account, repo, PRinfo.BranchName);
+                return PrUrl(account, repo, gitContext.SourceBranch);
             }
-            var accountAndRepoSsh = PRinfo.RemoteUrl.Split("bitbucket.org:")[1];
+            var accountAndRepoSsh = gitContext.RemoteUrl.Split("bitbucket.org:")[1];
             var accountSsh = accountAndRepoSsh.Split("/")[0];
             var repoSsh = accountAndRepoSsh.Split("/")[1].Replace(".git", "");
-            return PrUrl(accountSsh, repoSsh, PRinfo.BranchName);
+            return PrUrl(accountSsh, repoSsh, gitContext.SourceBranch);
         }
        
         private static string PrUrl(string account, string repo, string branch)

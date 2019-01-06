@@ -1,29 +1,36 @@
+using Microsoft.VisualBasic;
+
 namespace PR.PRTools
 {
     internal class GitHub : IPRTool
     {
+        /// <param name="remoteUrl">
+        /// https://github.com/johnkors/dotnet-pr.git
+        /// git@github.com:johnkors/dotnet-pr.git
+        /// </param>
         public bool IsMatch(string remoteUrl)
         {
-            return remoteUrl.StartsWith("git@github.com");
+            return remoteUrl.Contains("github.com");
         }
-
-        public string CreatePRUrl(GitContext gitContext)
+        
+        public string BuildUrl(GitContext gitContext)
         {
-            return $"https://github.com/{GetOrganization(gitContext.RemoteUrl)}/{GetRepo(gitContext.RemoteUrl)}/compare/master...{gitContext.BranchName}";
+            if (gitContext.RemoteUrl.StartsWith("http"))
+            {
+                var accountAndRepo = gitContext.RemoteUrl.Split("github.com/")[1];
+                var account = accountAndRepo.Split("/")[0];
+                var repo = accountAndRepo.Split("/")[1].Replace(".git", "");
+                return PrUrl(account, repo, gitContext.TargetBranch, gitContext.SourceBranch);
+            }
+            var accountAndRepoSsh = gitContext.RemoteUrl.Split("github.com:")[1];
+            var accountSsh = accountAndRepoSsh.Split("/")[0];
+            var repoSsh = accountAndRepoSsh.Split("/")[1].Replace(".git", "");
+            return PrUrl(accountSsh, repoSsh, gitContext.TargetBranch, gitContext.SourceBranch);
         }
-
-        private string GetRepo(string gitRemoteUrl)
+       
+        private static string PrUrl(string account, string repo, string targetBranch, string sourceBranch)
         {
-            var gitUrl = gitRemoteUrl.Split(':')[1];
-            var repo = gitUrl.Split('/')[1].Replace(".git", "");
-            return repo;
-        }
-
-        private string GetOrganization(string gitRemoteUrl)
-        {
-            var gitUrl = gitRemoteUrl.Split(':')[1];
-            var repo = gitUrl.Split('/')[0];
-            return repo;
+            return $"https://github.com/{account}/{repo}/compare/{targetBranch}...{sourceBranch}";
         }
     }
 }

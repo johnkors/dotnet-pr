@@ -26,16 +26,21 @@ namespace PR
             var remote = _remoteGuesser.GetGitRemote(repo);
             var prTool = _tools.FirstOrDefault(s => s.IsMatch(remote.Url));
 
-            if (prTool != null)
+            if (prTool == null)
             {
-                var supportedList = _tools.OrderBy(t => t.GetType().Name).Select(c => $"\n* {c.GetType().Name.ToString()}").Aggregate((x,y) => x + y);
+                var supportedList = _tools
+                    .OrderBy(t => t.GetType().Name)
+                    .Select(c => $"\n* {c.GetType().Name.ToString()}")
+                    .Aggregate((x,y) => x + y);
+                
                 throw new ApplicationException($"Unknown PR tool. Could not open PR for the `{remote.Name}` remote. \nSupported tools : {supportedList}");
             }
 
-            var prUrl = prTool.CreatePRUrl(new GitContext
+            var prUrl = prTool.BuildUrl(new GitContext
             {
                 RemoteUrl = remote.Url,
-                BranchName = repo.Head.FriendlyName
+                SourceBranch = repo.Head.FriendlyName,
+                TargetBranch = "master"
             });
             
             _browser.Open(prUrl);
