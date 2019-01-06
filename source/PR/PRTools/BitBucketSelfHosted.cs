@@ -20,14 +20,14 @@ namespace PR.PRTools
             var uri = new Uri(gitContext.RemoteUrl);
             if (uri.Scheme == "ssh")
             {
-                return PrUrl(gitContext.SourceBranch, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri);
+                return PrUrl(gitContext.SourceBranch, uri, ParseProjectFromSSHUri, ParseRepoFromSSHUri, gitContext.TargetBranch);
             }
-            return PrUrl(gitContext.SourceBranch, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri);
+            return PrUrl(gitContext.SourceBranch, uri, ParseProjectFromHttpUri, ParseRepoFromHttpUri, gitContext.TargetBranch);
         }
 
-        private static string PrUrl(string branch, Uri uri, Func<Uri,string> ProjectFetcher, Func<Uri, string> RepoFetcher)
+        private static string PrUrl(string branch, Uri uri, Func<Uri,string> ProjectFetcher, Func<Uri, string> RepoFetcher, string targetBranch)
         {
-            return $"http://{uri.Host}/projects/{ProjectFetcher(uri)}/repos/{RepoFetcher(uri)}/compare/commits?sourceBranch={branch}";
+            return $"http://{uri.Host}/projects/{ProjectFetcher(uri)}/repos/{RepoFetcher(uri)}/compare/commits?sourceBranch={branch}&targetBranch={targetBranch}";
         }
 
         private static string ParseRepoFromSSHUri(Uri uri)

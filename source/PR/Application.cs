@@ -40,7 +40,7 @@ namespace PR
             {
                 RemoteUrl = remote.Url,
                 SourceBranch = repo.Head.FriendlyName,
-                TargetBranch = "master"
+                TargetBranch = "othertest"
             });
             
             _browser.Open(prUrl);
