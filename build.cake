@@ -1,7 +1,7 @@
 var target = Argument("target", "Pack");
 var project = "PR";
 var nugetpackageId = "dotnet-pr";
-var version = GetBuildVersion("1.6.0");
+var version = GetBuildVersion("1.7.0");
 var outputDir = $"./builds/{project}";
 
 Task("Pack")
