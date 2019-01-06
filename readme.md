@@ -15,7 +15,7 @@ This a .NET Core Global Tool that ..
 
 ## Requirements
 
-* [.NET Core SDK 2.2 or later](https://dotnet.microsoft.com/download)
+* [.NET Core SDK 2.1 or later](https://dotnet.microsoft.com/download)
 
 ## Install
 

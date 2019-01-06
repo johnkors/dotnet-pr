@@ -4,6 +4,6 @@ namespace PR
     {
         public string RemoteUrl { get; set; }
         public string SourceBranch { get; set; }
-        public string TargetBranch { get; set; } = "master";
+        public string TargetBranch { get; set; }
     }
 }
