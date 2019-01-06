@@ -32,4 +32,5 @@ After install, navigate to a git repo and call `pr` from the terminal.
 * github.com
 * bitbucket.org
 * gitlab.com
+* dev.azure.com (Azure DevOps)
 * (Bitbucket (Self-Hosted))
