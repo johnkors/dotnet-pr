@@ -27,6 +27,20 @@ $ dotnet tool install dotnet-pr -g
 
 After install, navigate to a git repo and call `pr` from the terminal.
 
+## Optional arguments:
+
+* debug output
+
+```
+$ pr --debug
+```
+
+* Target the PR towards another branch than `master` (default)
+
+```
+$ pr <your-target-branch-here>
+```
+
 ## Supported PR tools
 
 * github.com
