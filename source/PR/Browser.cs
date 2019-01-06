@@ -10,10 +10,10 @@ namespace PR
         private readonly bool _debug;
         private readonly ILogger<Browser> _logger;
 
-        public Browser(ILogger<Browser> logger, DebugOptions debugOptions)
+        public Browser(ILogger<Browser> logger, AppOptions appOptions)
         {
             _logger = logger;
-            _debug = debugOptions.EnableDebug;
+            _debug = appOptions.EnableDebug;
         }
 
         public void Open(string url)
@@ -27,7 +27,7 @@ namespace PR
                 #if RELEASE
                 OpenBrowserAt(url);
                 #else
-                _logger.LogDebug(url);
+                Console.WriteLine(url);
                 #endif
             }
         }
