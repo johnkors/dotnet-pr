@@ -27,7 +27,7 @@ namespace PR
                 #if RELEASE
                 OpenBrowserAt(url);
                 #else
-                Console.WriteLine(url);
+                _logger.LogDebug(url);
                 #endif
             }
         }
