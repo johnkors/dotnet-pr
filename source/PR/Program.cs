@@ -28,7 +28,22 @@ namespace PR
         private static ServiceProvider Bootstrap(string[] args)
         {
             var enableDebug = args.Contains("--debug");
-            var debugOptions = new DebugOptions { EnableDebug = enableDebug };
+            var targetBranch = string.Empty;
+            if (args.Length > 0)
+            {
+                var restOfArgs = args.ToList();
+                restOfArgs.Remove("--debug");
+                targetBranch = restOfArgs.Any() ? restOfArgs[0] : "master";
+            }
+            else
+            {
+                targetBranch = "master";
+            }
+            var debugOptions = new AppOptions
+            {
+                EnableDebug = enableDebug,
+                TargetBranch = targetBranch
+            };
 
             var services = new ServiceCollection()
                 .AddLogging(c =>
