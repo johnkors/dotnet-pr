@@ -32,7 +32,7 @@ namespace PR
         {
             var localBranch = Repository.Head.FriendlyName;
 
-            var remoteName = "origin";
+            var remoteName = "origin"; //default
             if (Repository.Head.TrackedBranch != null)
             {
                 remoteName = Repository.Head.TrackedBranch.RemoteName;

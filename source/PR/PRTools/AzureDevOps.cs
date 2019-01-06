@@ -18,7 +18,25 @@ namespace PR.PRTools
 
         public string CreatePRUrl(PRInfo prInfo)
         {
-            return $"https://dev.azure.com/{GetOrganization(prInfo.RemoteUrl)}/_git/{GetRepo(prInfo.RemoteUrl)}/pullrequestcreate?targetRef=master&sourceRef={prInfo.BranchName}";;
+            if (prInfo.RemoteUrl.StartsWith("git@ssh"))
+            {
+                return $"https://dev.azure.com/{GetOrganization(prInfo.RemoteUrl)}/_git/{GetRepo(prInfo.RemoteUrl)}/pullrequestcreate?targetRef=master&sourceRef={prInfo.BranchName}";
+            }
+            return $"https://dev.azure.com/{GetOrganizationHttp(prInfo.RemoteUrl)}/_git/{GetRepoHttp(prInfo.RemoteUrl)}/pullrequestcreate?targetRef=master&sourceRef={prInfo.BranchName}";
+        }
+        
+        private string GetOrganizationHttp(string gitRemoteUrl)
+        {
+            var gitUrl = gitRemoteUrl.Split("dev.azure.com/")[1];
+            var repo = gitUrl.Split('/')[0];
+            return repo;
+        }
+        
+        private string GetRepoHttp(string gitRemoteUrl)
+        {
+            var gitUrl = gitRemoteUrl.Split("dev.azure.com/")[1];
+            var repo = gitUrl.Split('/')[3].Replace(".git", "");
+            return repo;
         }
 
         private string GetOrganization(string gitRemoteUrl)
