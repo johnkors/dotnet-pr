@@ -4,22 +4,24 @@ namespace PR.PRTools
 {
     internal class BitBucketOrg : IPRTool
     {
+        /// <param name="remoteUrl">
+        /// https://johnkors@bitbucket.org/johnkors/dotnet-pr.git
+        /// git@bitbucket.org:johnkors/dotnet-pr.git
+        /// </param>
         public bool IsMatch(string remoteUrl)
         {
             return remoteUrl.Contains("@bitbucket.org", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public string CreatePRUrl(PRInfo PRinfo)
+        public string CreatePRUrl(GitContext PRinfo)
         {
             if (PRinfo.RemoteUrl.StartsWith("http"))
             {
-                //https://johnkors@bitbucket.org/johnkors/dotnet-pr.git
                 var accountAndRepo = PRinfo.RemoteUrl.Split("bitbucket.org/")[1];
                 var account = accountAndRepo.Split("/")[0];
                 var repo = accountAndRepo.Split("/")[1].Replace(".git", "");
                 return PrUrl(account, repo, PRinfo.BranchName);
             }
-            // git@bitbucket.org:johnkors/dotnet-pr.git
             var accountAndRepoSsh = PRinfo.RemoteUrl.Split("bitbucket.org:")[1];
             var accountSsh = accountAndRepoSsh.Split("/")[0];
             var repoSsh = accountAndRepoSsh.Split("/")[1].Replace(".git", "");

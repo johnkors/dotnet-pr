@@ -1,8 +1,7 @@
 namespace PR
 {
-    internal class PRInfo
+    internal class GitContext
     {
-        public string RemoteName { get; set; }
         public string RemoteUrl { get; set; }
         public string BranchName { get; set; }
     }

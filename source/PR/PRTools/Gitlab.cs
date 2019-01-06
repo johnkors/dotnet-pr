@@ -2,14 +2,14 @@ using System;
 
 namespace PR.PRTools
 {
-    internal class GitLab : IPRTool
+    internal class Gitlab : IPRTool
     {
         public bool IsMatch(string remoteUrl)
         {
             return remoteUrl.Contains("@gitlab.com", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public string CreatePRUrl(PRInfo PRinfo)
+        public string CreatePRUrl(GitContext PRinfo)
         {
             if (PRinfo.RemoteUrl.StartsWith("http"))
             {

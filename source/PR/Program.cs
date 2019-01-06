@@ -12,15 +12,15 @@ namespace PR
         {
             using (var serviceProvider = Bootstrap(args))
             {
-                var runner = serviceProvider.GetService<Runner>();
+                var runner = serviceProvider.GetService<Application>();
                 try
                 {
-                    runner.Run();
+                    runner.OpenToolInBrowser();
                 }
                 catch (ApplicationException ae)
                 {
                     var logger = serviceProvider.GetService<ILogger<Program>>();
-                    logger.LogError(ae.Message);
+                    logger.LogError($"¯\\_(ツ)_/¯ \n{ae.Message}");
                 }
             }
         }
@@ -46,15 +46,15 @@ namespace PR
                     
                 })
                 .AddSingleton(debugOptions)
-                .AddSingleton<GitHelper>()
+                .AddSingleton<GitRepositoryLocator>()
+                .AddSingleton<GitRemoteGuesser>()
                 .AddSingleton<IPRTool,BitBucketSelfHosted>()
                 .AddSingleton<IPRTool,GitHub>()
                 .AddSingleton<IPRTool,BitBucketOrg>()
-                .AddSingleton<IPRTool,GitLab>()
+                .AddSingleton<IPRTool,Gitlab>()
                 .AddSingleton<IPRTool,AzureDevOps>()
-                .AddSingleton<PRToolFactory>()
                 .AddSingleton<Browser>()
-                .AddSingleton<Runner>();
+                .AddSingleton<Application>();
 
             return services.BuildServiceProvider();
         }

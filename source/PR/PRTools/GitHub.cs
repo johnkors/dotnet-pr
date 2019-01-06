@@ -7,9 +7,9 @@ namespace PR.PRTools
             return remoteUrl.StartsWith("git@github.com");
         }
 
-        public string CreatePRUrl(PRInfo prInfo)
+        public string CreatePRUrl(GitContext gitContext)
         {
-            return $"https://github.com/{GetOrganization(prInfo.RemoteUrl)}/{GetRepo(prInfo.RemoteUrl)}/compare/master...{prInfo.BranchName}";
+            return $"https://github.com/{GetOrganization(gitContext.RemoteUrl)}/{GetRepo(gitContext.RemoteUrl)}/compare/master...{gitContext.BranchName}";
         }
 
         private string GetRepo(string gitRemoteUrl)
