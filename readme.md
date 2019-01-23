@@ -8,9 +8,9 @@ This a .NET Core Global Tool that ..
 
 1) Given your terminals working directory is a git repo
 
-2) And that git repo has a remote that is a code collaboration tool (ex. GitHub, BitBucket/Stash)
+2) That git repo has a remote that is a code collaboration tool (ex. `origin` -> GitHub/BitBucket/GitLab/Azure DevOps)
 
-3) Opens your default browser in Pull Request UI for the _current branch_ in the tool connected to the remote branch.
+3) Opens your default browser in the Pull Request UI for the _current branch_ in the tool connected to the remote branch.
 
 
 ## Requirements
