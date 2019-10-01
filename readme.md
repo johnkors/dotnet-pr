@@ -1,6 +1,6 @@
 [![NuGet](https://img.shields.io/nuget/v/dotnet-pr.svg)](https://www.nuget.org/packages/dotnet-pr/)
 [![NuGet](https://img.shields.io/nuget/dt/dotnet-pr.svg)](https://www.nuget.org/packages/dotnet-pr/)
-
+[![Build](https://github.com/johnkors/dotnet-pr/workflows/CI/badge.svg)](https://github.com/johnkors/dotnet-pr/actions)
 ## dotnet-pr
 
 
