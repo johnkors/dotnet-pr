@@ -1,6 +1,6 @@
 namespace PR.PRTools
 {
-    internal class AzureDevOps : IPRTool
+    public class AzureDevOps : IPRTool
     {
         /// <param name="remoteUrl">
         /// https://RetireNET@dev.azure.com/RetireNET/dotnet-retire/_git/testrepo
@@ -15,9 +15,9 @@ namespace PR.PRTools
         {
             if (gitContext.RemoteUrl.StartsWith("git@ssh"))
             {
-                return $"https://dev.azure.com/{GetOrganization(gitContext.RemoteUrl)}/_git/{GetRepo(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
+                return $"https://dev.azure.com/{GetOrganization(gitContext.RemoteUrl)}/{GetProject(gitContext.RemoteUrl)}/_git/{GetRepo(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
             }
-            return $"https://dev.azure.com/{GetOrganizationHttp(gitContext.RemoteUrl)}/_git/{GetRepoHttp(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
+            return $"https://dev.azure.com/{GetOrganizationHttp(gitContext.RemoteUrl)}/{GetProject(gitContext.RemoteUrl)}/_git/{GetRepoHttp(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
         }
         
         private string GetOrganizationHttp(string gitRemoteUrl)
@@ -39,6 +39,13 @@ namespace PR.PRTools
             var gitUrl = gitRemoteUrl.Split(':')[1];
             var repo = gitUrl.Split('/')[1];
             return repo;
+        }
+        
+        private string GetProject(string gitRemoteUrl)
+        {
+            var gitUrl = gitRemoteUrl.Split(':')[1];
+            var project = gitUrl.Split('/')[2];
+            return project;
         }
 
         private string GetRepo(string gitRemoteUrl)

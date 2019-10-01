@@ -1,6 +1,6 @@
 var target = Argument("target", "Pack");
 var project = "dotnet-pr";
-var version = GetBuildVersion("1.7.1");
+var version = GetBuildVersion("1.8.0");
 var outputDir = $"./builds/{project}";
 
 Task("Pack")
