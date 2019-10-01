@@ -3,7 +3,17 @@ var project = "dotnet-pr";
 var version = GetBuildVersion("1.8.0");
 var outputDir = $"./builds/{project}";
 
+Task("Test")
+    .Does(() => {
+        var settings = new DotNetCoreTestSettings
+        {
+            Configuration = "Release",
+        };            
+        DotNetCoreTest("./source/dotnet-pr.tests/dotnet-pr.tests.csproj", settings); 
+});
+
 Task("Pack")
+    .IsDependentOn("Test")
     .Does(() => {
         var publishSettings = new DotNetCorePackSettings{
             OutputDirectory = outputDir,
