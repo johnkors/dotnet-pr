@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-pr", "dotnet-pr\dotnet-pr.csproj", "{FCF8A291-A6B6-4667-A73F-FCF66D184B7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-pr.tests", "dotnet-pr.tests\dotnet-pr.tests.csproj", "{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{FCF8A291-A6B6-4667-A73F-FCF66D184B7D}.Release|x64.Build.0 = Release|Any CPU
 		{FCF8A291-A6B6-4667-A73F-FCF66D184B7D}.Release|x86.ActiveCfg = Release|Any CPU
 		{FCF8A291-A6B6-4667-A73F-FCF66D184B7D}.Release|x86.Build.0 = Release|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Debug|x64.Build.0 = Debug|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Debug|x86.Build.0 = Debug|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Release|x64.ActiveCfg = Release|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Release|x64.Build.0 = Release|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Release|x86.ActiveCfg = Release|Any CPU
+		{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
