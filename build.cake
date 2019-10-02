@@ -1,6 +1,6 @@
 var target = Argument("target", "Pack");
 var project = "dotnet-pr";
-var version = GetBuildVersion("1.8.0");
+var version = GetBuildVersion("1.8.1");
 var outputDir = $"./builds/{project}";
 
 Task("Test")
@@ -8,6 +8,7 @@ Task("Test")
         var settings = new DotNetCoreTestSettings
         {
             Configuration = "Release",
+                ArgumentCustomization = args=>args.Append($"--logger console;verbosity=detailed")
         };            
         DotNetCoreTest("./source/dotnet-pr.tests/dotnet-pr.tests.csproj", settings); 
 });
