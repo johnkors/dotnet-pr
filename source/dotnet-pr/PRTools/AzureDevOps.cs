@@ -17,7 +17,7 @@ namespace PR.PRTools
             {
                 return $"https://dev.azure.com/{GetOrganization(gitContext.RemoteUrl)}/{GetProject(gitContext.RemoteUrl)}/_git/{GetRepo(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
             }
-            return $"https://dev.azure.com/{GetOrganizationHttp(gitContext.RemoteUrl)}/{GetProject(gitContext.RemoteUrl)}/_git/{GetRepoHttp(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
+            return $"https://dev.azure.com/{GetOrganizationHttp(gitContext.RemoteUrl)}/{GetProjectHttp(gitContext.RemoteUrl)}/_git/{GetRepoHttp(gitContext.RemoteUrl)}/pullrequestcreate?targetRef={gitContext.TargetBranch}&sourceRef={gitContext.SourceBranch}";
         }
         
         private string GetOrganizationHttp(string gitRemoteUrl)
@@ -46,6 +46,13 @@ namespace PR.PRTools
             var gitUrl = gitRemoteUrl.Split(':')[1];
             var project = gitUrl.Split('/')[2];
             return project;
+        }
+
+        private string GetProjectHttp(string gitRemoteUrl)
+        {
+            var gitUrl = gitRemoteUrl.Split("dev.azure.com/")[1];
+            var repo = gitUrl.Split('/')[1];
+            return repo;
         }
 
         private string GetRepo(string gitRemoteUrl)
