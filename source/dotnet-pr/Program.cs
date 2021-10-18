@@ -49,7 +49,7 @@ namespace PR
                 .AddLogging(c =>
                 {
                     c.AddConsole().AddDebug();
-                    
+
                     if (debugOptions.EnableDebug)
                     {
                         c.SetMinimumLevel(LogLevel.Trace);
@@ -58,16 +58,17 @@ namespace PR
                     {
                         c.SetMinimumLevel(LogLevel.Warning);
                     }
-                    
+
                 })
                 .AddSingleton(debugOptions)
                 .AddSingleton<GitRepositoryLocator>()
                 .AddSingleton<GitRemoteGuesser>()
-                .AddSingleton<IPRTool,BitBucketSelfHosted>()
-                .AddSingleton<IPRTool,GitHub>()
-                .AddSingleton<IPRTool,BitBucketOrg>()
-                .AddSingleton<IPRTool,Gitlab>()
-                .AddSingleton<IPRTool,AzureDevOps>()
+                .AddSingleton<IPRTool, BitBucketSelfHosted>()
+                .AddSingleton<IPRTool, GitHub>()
+                .AddSingleton<IPRTool, BitBucketOrg>()
+                .AddSingleton<IPRTool, Gitlab>()
+                .AddSingleton<IPRTool, AzureDevOps>()
+                .AddSingleton<IPRTool, AzureDevOpsPrivate>()
                 .AddSingleton<Browser>()
                 .AddSingleton<Application>();
 
