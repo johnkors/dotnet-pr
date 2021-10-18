@@ -46,5 +46,6 @@ $ pr <your-target-branch-here>
 * github.com
 * bitbucket.org
 * gitlab.com
-* dev.azure.com (Azure DevOps)
+* dev.azure.com (Azure DevOps, dev.azure.com/{org})
+* dev.azure.com (Azure DevOps Private, {org}.visualstudio.com)
 * (Bitbucket (Self-Hosted))

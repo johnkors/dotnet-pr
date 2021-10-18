@@ -1,6 +1,6 @@
 var target = Argument("target", "Pack");
 var project = "dotnet-pr";
-var version = GetBuildVersion("1.8.1");
+var version = GetBuildVersion("2.0.0");
 var outputDir = $"./builds/{project}";
 
 Task("Test")
@@ -9,8 +9,8 @@ Task("Test")
         {
             Configuration = "Release",
                 ArgumentCustomization = args=>args.Append($"--logger console;verbosity=detailed")
-        };            
-        DotNetCoreTest("./source/dotnet-pr.tests/dotnet-pr.tests.csproj", settings); 
+        };
+        DotNetCoreTest("./source/dotnet-pr.tests/dotnet-pr.tests.csproj", settings);
 });
 
 Task("Pack")
