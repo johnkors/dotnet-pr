@@ -14,23 +14,28 @@
     <RepositoryUrl>https://github.com/johnkors/dotnet-pr</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/johnkors/dotnet-pr/master/images/nuget/dotnet-pr/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Adds PR tool</PackageReleaseNotes>
+    <PackageReleaseNotes>.NET 3.1 + .NET 6 support. Deprecates .NET 2.1</PackageReleaseNotes>
     </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="LibGit2Sharp" Version="0.25.4" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+  <ItemGroup Condition="'$(TargetFramework.Contains(netcoreapp3.1))' == 'true'">
+    <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+  <ItemGroup Condition="'$(TargetFramework.Contains(net6.0))' == 'true'">
+    <PackageReference Include="LibGit2Sharp" Version="0.27.0-*" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0-*" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0-*" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0-*" />
   </ItemGroup>
+
+    <!-- Workaround for this bug (replace the analyzer name with the one you need to exclude (filename only, no extension) -->
+    <Target Name="RemoveLoggingAnalyzer" BeforeTargets="CoreCompile">
+      <ItemGroup>
+        <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Microsoft.Extensions.Logging.Generators'" />
+      </ItemGroup>
+    </Target>
 
 </Project>

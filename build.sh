@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# Build, pack, 
-docker build --rm .
+# Build, pack,
+docker build --rm . --progress=plain
