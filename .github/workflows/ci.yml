@@ -9,8 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Run tool in docker
-      run: ./build.sh
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: "3.1.x"
@@ -20,6 +18,8 @@ jobs:
         include-prerelease: true
     - name: Test
       run: dotnet test source/dotnet-pr.tests --logger "GitHubActions;report-warnings=false"
+    - name: Run tool in docker
+      run: ./build.sh
 
 
 
