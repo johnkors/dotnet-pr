@@ -1,14 +1,25 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v1
-    - name: Run build in docker
+    - name: Run tool in docker
       run: ./build.sh
-  
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: "3.1.x"
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: "6.0.x"
+        include-prerelease: true
+    - name: Test
+      run: dotnet test source/dotnet-pr.tests --logger "GitHubActions;report-warnings=false"
+
+
+

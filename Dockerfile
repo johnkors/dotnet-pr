@@ -4,9 +4,7 @@ WORKDIR /
 COPY ./ ./therepo
 
 WORKDIR /therepo/source/dotnet-pr
-RUN dotnet restore
-RUN dotnet build
-RUN dotnet pack -o ../../builds/dotnet-pr /p:Version=999.3.1  --no-build
+RUN dotnet pack -o ../../builds/dotnet-pr /p:Version=999.3.1
 
 # install dotnet-pr from local feed
 WORKDIR /
