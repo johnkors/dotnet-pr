@@ -13,9 +13,10 @@ This a .NET Core Global Tool that ..
 3) Opens your default browser in the Pull Request UI for the _current branch_ in the tool connected to the remote branch.
 
 
-## Requirements
+## Installation
 
-* [.NET Core SDK 2.1 or later](https://dotnet.microsoft.com/download)
+* Running the tool: [.NET 3 or 6](https://dotnet.microsoft.com/download)
+* Development: Both .NET 3 and 6
 
 ## Install
 
