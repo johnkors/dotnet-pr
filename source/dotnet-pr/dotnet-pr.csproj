@@ -12,9 +12,8 @@
     <PackageProjectUrl>https://github.com/johnkors/dotnet-pr/</PackageProjectUrl>
     <License>https://raw.githubusercontent.com/johnkors/dotnet-pr/master/LICENSE</License>
     <RepositoryUrl>https://github.com/johnkors/dotnet-pr</RepositoryUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/johnkors/dotnet-pr/master/images/nuget/dotnet-pr/icon.512x512.png</PackageIconUrl>
+    <PackageIcon>icon.512x512.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>.NET 3.1 + .NET 6 support. Deprecates .NET 2.1</PackageReleaseNotes>
     </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework.Contains(netcoreapp3.1))' == 'true'">
@@ -37,5 +36,9 @@
         <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Microsoft.Extensions.Logging.Generators'" />
       </ItemGroup>
     </Target>
+
+    <ItemGroup>
+      <None Include="../../images/nuget/dotnet-pr/icon.512x512.png" Pack="true" PackagePath="" />
+    </ItemGroup>
 
 </Project>
