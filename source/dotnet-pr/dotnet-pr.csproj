@@ -13,6 +13,7 @@
     <License>https://raw.githubusercontent.com/johnkors/dotnet-pr/master/LICENSE</License>
     <RepositoryUrl>https://github.com/johnkors/dotnet-pr</RepositoryUrl>
     <PackageIcon>icon.512x512.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
@@ -39,6 +40,7 @@
 
     <ItemGroup>
       <None Include="../../images/nuget/dotnet-pr/icon.512x512.png" Pack="true" PackagePath="" />
+      <None Include="../../readme.md" Pack="true" PackagePath="" />
     </ItemGroup>
 
 </Project>
