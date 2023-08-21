@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-pr", "dotnet-pr\dotn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-pr.tests", "dotnet-pr.tests\dotnet-pr.tests.csproj", "{C77D5223-41F1-4B4A-BD8D-6F58877D3C4D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{10CBAF56-F382-480E-B8BE-CBF270617AD8}"
+ProjectSection(SolutionItems) = preProject
+	..\CI.yml = ..\.github\workflows\CI.yml
+	..\Release.yml = ..\.github\workflows\Release.yml
+	..\PreRelease.yml = ..\.github\workflows\PreRelease.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
