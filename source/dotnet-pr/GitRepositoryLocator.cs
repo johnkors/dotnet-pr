@@ -1,20 +1,11 @@
-using System;
-using System.IO;
 using LibGit2Sharp;
 using Microsoft.Extensions.Logging;
 
 namespace PR;
 
-internal class GitRepositoryLocator
+internal class GitRepositoryLocator(ILogger<GitRepositoryLocator> logger)
 {
-    private readonly string _initialDirectory;
-    private readonly ILogger<GitRepositoryLocator> _logger;
-
-    public GitRepositoryLocator(ILogger<GitRepositoryLocator> logger)
-    {
-        _logger = logger;
-        _initialDirectory = Directory.GetCurrentDirectory();
-    }
+    private readonly string _initialDirectory = Directory.GetCurrentDirectory();
 
     public Repository LocateRepository()
     {
@@ -29,7 +20,7 @@ internal class GitRepositoryLocator
 
     private Repository LocateRepository(string currentDirectory)
     {
-        _logger.LogDebug("Searching for git repo in " + currentDirectory);
+        logger.LogDebug("Searching for git repo in " + currentDirectory);
 
         try
         {

@@ -1,5 +1,3 @@
-using System;
-
 namespace PR.PRTools;
 
 internal class BitBucketOrg : IPRTool

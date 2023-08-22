@@ -1,26 +1,18 @@
-using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 
 namespace PR;
 
-internal class Browser
+internal class Browser(ILogger<Browser> logger, AppOptions appOptions)
 {
-    private readonly bool _debug;
-    private readonly ILogger<Browser> _logger;
-
-    public Browser(ILogger<Browser> logger, AppOptions appOptions)
-    {
-        _logger = logger;
-        _debug = appOptions.EnableDebug;
-    }
+    private readonly bool _debug = appOptions.EnableDebug;
 
     public void Open(string url)
     {
         if (_debug)
         {
-            _logger.LogDebug(url);
+            logger.LogDebug(url);
         }
         else
         {

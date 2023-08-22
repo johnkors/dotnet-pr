@@ -1,41 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 using PR.PRTools;
 
 namespace PR;
 
-internal class Application
+internal class Application(GitRepositoryLocator repositoryLocator,
+    GitRemoteGuesser remoteGuesser,
+    IEnumerable<IPRTool> tools,
+    AppOptions options,
+    Browser browser, ILoggerFactory logFactory)
 {
-    private readonly GitRepositoryLocator _repositoryLocator;
-    private readonly GitRemoteGuesser _remoteGuesser;
-    private readonly IEnumerable<IPRTool> _tools;
-    private readonly AppOptions _options;
-    private readonly Browser _browser;
-    private readonly ILoggerFactory _logFactory;
-
-    public Application(GitRepositoryLocator repositoryLocator,
-        GitRemoteGuesser remoteGuesser,
-        IEnumerable<IPRTool> tools,
-        AppOptions options,
-        Browser browser, ILoggerFactory logFactory)
-    {
-        _repositoryLocator = repositoryLocator;
-        _remoteGuesser = remoteGuesser;
-        _tools = tools;
-        _options = options;
-        _browser = browser;
-        _logFactory = logFactory;
-    }
-
     public void OpenToolInBrowser()
     {
-        var repo = _repositoryLocator.LocateRepository();
-        var remote = _remoteGuesser.GetGitRemote(repo);
-        var prTool = _tools.FirstOrDefault(s =>
+        var repo = repositoryLocator.LocateRepository();
+        var remote = remoteGuesser.GetGitRemote(repo);
+        var prTool = tools.FirstOrDefault(s =>
         {
-            var logger = _logFactory.CreateLogger(s.GetType());
+            var logger = logFactory.CreateLogger(s.GetType());
             var isMatch = s.IsMatch(remote.Url);
             logger.LogDebug(isMatch ? $"Match" : "No match");
             return isMatch;
@@ -43,7 +23,7 @@ internal class Application
 
         if (prTool == null)
         {
-            var supportedList = _tools
+            var supportedList = tools
                 .OrderBy(t => t.GetType().Name)
                 .Select(c => $"\n* {c.GetType().Name.ToString()}")
                 .Aggregate((x,y) => x + y);
@@ -55,9 +35,9 @@ internal class Application
         {
             RemoteUrl = remote.Url,
             SourceBranch = repo.Head.FriendlyName,
-            TargetBranch = _options.TargetBranch
+            TargetBranch = options.TargetBranch
         });
 
-        _browser.Open(prUrl);
+        browser.Open(prUrl);
     }
 }
