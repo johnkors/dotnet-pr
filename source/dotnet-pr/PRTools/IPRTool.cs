@@ -1,8 +1,7 @@
-namespace PR.PRTools
+namespace PR.PRTools;
+
+public interface IPRTool
 {
-    public interface IPRTool
-    {
-        bool IsMatch(string remoteUrl);
-        string BuildUrl(GitContext gitContext);
-    }
+    bool IsMatch(string remoteUrl);
+    string BuildUrl(GitContext gitContext);
 }
