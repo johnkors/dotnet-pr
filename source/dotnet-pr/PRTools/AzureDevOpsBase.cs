@@ -1,74 +1,73 @@
-﻿namespace PR.PRTools
+﻿namespace PR.PRTools;
+
+public abstract class AzureDevOpsBase : IPRTool
 {
-    public abstract class AzureDevOpsBase : IPRTool
+    protected abstract string Host { get; }
+    protected abstract string SshUrlFormat { get; }
+
+    public bool IsMatch(string remoteUrl)
     {
-        protected abstract string Host { get; }
-        protected abstract string SshUrlFormat { get; }
+        return remoteUrl.Contains(Host);
+    }
 
-        public bool IsMatch(string remoteUrl)
+    public string BuildUrl(GitContext gitContext)
+    {
+        string org;
+        string project;
+        string repo;
+
+        if (gitContext.RemoteUrl.Contains(SshUrlFormat))
         {
-            return remoteUrl.Contains(Host);
+            org = GetOrganization(gitContext.RemoteUrl);
+            project = GetProject(gitContext.RemoteUrl);
+            repo = GetRepo(gitContext.RemoteUrl);
+        }
+        else
+        {
+            org = GetOrganizationHttp(gitContext.RemoteUrl);
+            project = GetProjectHttp(gitContext.RemoteUrl);
+            repo = GetRepoHttp(gitContext.RemoteUrl);
         }
 
-        public string BuildUrl(GitContext gitContext)
-        {
-            string org;
-            string project;
-            string repo;
+        return BuildUrl(org, project, repo, gitContext);
+    }
 
-            if (gitContext.RemoteUrl.Contains(SshUrlFormat))
-            {
-                org = GetOrganization(gitContext.RemoteUrl);
-                project = GetProject(gitContext.RemoteUrl);
-                repo = GetRepo(gitContext.RemoteUrl);
-            }
-            else
-            {
-                org = GetOrganizationHttp(gitContext.RemoteUrl);
-                project = GetProjectHttp(gitContext.RemoteUrl);
-                repo = GetRepoHttp(gitContext.RemoteUrl);
-            }
+    protected abstract string BuildUrl(string org, string project, string repo, GitContext gitContext);
 
-            return BuildUrl(org, project, repo, gitContext);
-        }
+    protected abstract string GetOrganizationHttp(string gitRemoteUrl);
 
-        protected abstract string BuildUrl(string org, string project, string repo, GitContext gitContext);
+    private string GetOrganization(string gitRemoteUrl)
+    {
+        var gitUrl = gitRemoteUrl.Split(':')[1];
+        var org = gitUrl.Split('/')[1];
+        return org;
+    }
 
-        protected abstract string GetOrganizationHttp(string gitRemoteUrl);
+    private string GetProjectHttp(string gitRemoteUrl)
+    {
+        var gitUrl = gitRemoteUrl.Split(Host + "/")[1];
+        var project = gitUrl.Split('/')[1];
+        return project;
+    }
 
-        private string GetOrganization(string gitRemoteUrl)
-        {
-            var gitUrl = gitRemoteUrl.Split(':')[1];
-            var org = gitUrl.Split('/')[1];
-            return org;
-        }
+    private string GetProject(string gitRemoteUrl)
+    {
+        var gitUrl = gitRemoteUrl.Split(':')[1];
+        var project = gitUrl.Split('/')[2];
+        return project;
+    }
 
-        private string GetProjectHttp(string gitRemoteUrl)
-        {
-            var gitUrl = gitRemoteUrl.Split(Host + "/")[1];
-            var project = gitUrl.Split('/')[1];
-            return project;
-        }
+    private string GetRepoHttp(string gitRemoteUrl)
+    {
+        var gitUrl = gitRemoteUrl.Split(Host + "/")[1];
+        var repo = gitUrl.Split('/')[3].Replace(".git", "");
+        return repo;
+    }
 
-        private string GetProject(string gitRemoteUrl)
-        {
-            var gitUrl = gitRemoteUrl.Split(':')[1];
-            var project = gitUrl.Split('/')[2];
-            return project;
-        }
-
-        private string GetRepoHttp(string gitRemoteUrl)
-        {
-            var gitUrl = gitRemoteUrl.Split(Host + "/")[1];
-            var repo = gitUrl.Split('/')[3].Replace(".git", "");
-            return repo;
-        }
-
-        private string GetRepo(string gitRemoteUrl)
-        {
-            var gitUrl = gitRemoteUrl.Split(':')[1];
-            var repo = gitUrl.Split('/')[3].Replace(".git", "");
-            return repo;
-        }
+    private string GetRepo(string gitRemoteUrl)
+    {
+        var gitUrl = gitRemoteUrl.Split(':')[1];
+        var repo = gitUrl.Split('/')[3].Replace(".git", "");
+        return repo;
     }
 }

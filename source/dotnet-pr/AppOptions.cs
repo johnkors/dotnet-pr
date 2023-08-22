@@ -1,9 +1,8 @@
-namespace PR
+namespace PR;
+
+internal class AppOptions
 {
-    internal class AppOptions
-    {
-        public bool EnableDebug { get; set; }
+    public bool EnableDebug { get; set; }
         
-        public string TargetBranch { get; set; }
-    }
+    public string TargetBranch { get; set; }
 }

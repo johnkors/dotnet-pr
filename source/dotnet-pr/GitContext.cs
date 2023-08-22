@@ -1,9 +1,8 @@
-namespace PR
+namespace PR;
+
+public class GitContext
 {
-    public class GitContext
-    {
-        public string RemoteUrl { get; set; }
-        public string SourceBranch { get; set; }
-        public string TargetBranch { get; set; }
-    }
+    public string RemoteUrl { get; set; }
+    public string SourceBranch { get; set; }
+    public string TargetBranch { get; set; }
 }
