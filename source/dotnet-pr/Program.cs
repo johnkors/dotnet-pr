@@ -29,11 +29,11 @@ ServiceProvider Bootstrap(string[] args)
     {
         var restOfArgs = args.ToList();
         restOfArgs.Remove("--debug");
-        targetBranch = restOfArgs.Any() ? restOfArgs[0] : "master";
+        targetBranch = restOfArgs.Any() ? restOfArgs[0] : "main";
     }
     else
     {
-        targetBranch = "master";
+        targetBranch = "main";
     }
     var debugOptions = new AppOptions
     {
