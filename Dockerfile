@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
 WORKDIR /
 COPY ./ ./therepo
@@ -13,7 +13,5 @@ ENV PATH="/root/.dotnet/tools:${PATH}"
 RUN dotnet tool list -g
 WORKDIR /therepo/source/dotnet-PR/Strategies
 RUN pr --debug
-RUN pr
-RUN pr some-target-branch
 RUN pr atarget --debug
 RUN pr --debug somothertarget

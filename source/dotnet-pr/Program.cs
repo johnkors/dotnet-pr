@@ -15,6 +15,11 @@ catch (ApplicationException ae)
     var logger = serviceProvider.GetService<ILogger<Program>>();
     logger.LogError($"¯\\_(ツ)_/¯ \n{ae.Message}");
 }
+catch (Exception e)
+{
+    var logger = serviceProvider.GetService<ILogger<Program>>();
+    logger.LogError($"¯\\_(ツ)_/¯ \n{e.Message}");
+}
 
 ServiceProvider Bootstrap(string[] args)
 {
@@ -24,11 +29,11 @@ ServiceProvider Bootstrap(string[] args)
     {
         var restOfArgs = args.ToList();
         restOfArgs.Remove("--debug");
-        targetBranch = restOfArgs.Any() ? restOfArgs[0] : "master";
+        targetBranch = restOfArgs.Any() ? restOfArgs[0] : "main";
     }
     else
     {
-        targetBranch = "master";
+        targetBranch = "main";
     }
     var debugOptions = new AppOptions
     {
