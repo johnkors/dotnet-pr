@@ -15,8 +15,8 @@ This a .NET Core Global Tool that ..
 
 ## Installation
 
-* Running the tool: [.NET 3 or 6](https://dotnet.microsoft.com/download)
-* Development: Both .NET 3 and 6
+* Running the tool: [.NET 7 or 8](https://dotnet.microsoft.com/download)
+* Development: .NET 8 SDK
 
 ## Install
 

@@ -15,6 +15,11 @@ catch (ApplicationException ae)
     var logger = serviceProvider.GetService<ILogger<Program>>();
     logger.LogError($"¯\\_(ツ)_/¯ \n{ae.Message}");
 }
+catch (Exception e)
+{
+    var logger = serviceProvider.GetService<ILogger<Program>>();
+    logger.LogError($"¯\\_(ツ)_/¯ \n{e.Message}");
+}
 
 ServiceProvider Bootstrap(string[] args)
 {
