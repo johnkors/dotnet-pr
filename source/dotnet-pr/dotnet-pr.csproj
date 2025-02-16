@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net8.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <PackageId>dotnet-pr</PackageId>
     <ToolCommandName>pr</ToolCommandName>
     <Authors>John Korsnes</Authors>
@@ -15,29 +15,20 @@
     <PackageIcon>icon.512x512.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
-    <LangVersion>Preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="LibGit2Sharp" Version="0.27.0" />
+    <PackageReference Include="LibGit2Sharp" Version="0.27.0"/>
   </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0"/>
   </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+  <ItemGroup>
+    <None Include="../../images/nuget/dotnet-pr/icon.512x512.png" Pack="true" PackagePath=""/>
+    <None Include="../../readme.md" Pack="true" PackagePath=""/>
   </ItemGroup>
-
-    <ItemGroup>
-      <None Include="../../images/nuget/dotnet-pr/icon.512x512.png" Pack="true" PackagePath="" />
-      <None Include="../../readme.md" Pack="true" PackagePath="" />
-    </ItemGroup>
 
 </Project>

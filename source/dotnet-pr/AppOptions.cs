@@ -2,7 +2,7 @@ namespace PR;
 
 internal class AppOptions
 {
-    public bool EnableDebug { get; set; }
-        
-    public string TargetBranch { get; set; }
+    public bool EnableDebug { get; init; }
+
+    public required string TargetBranch { get; init; }
 }

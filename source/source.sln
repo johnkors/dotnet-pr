@@ -12,6 +12,7 @@ ProjectSection(SolutionItems) = preProject
 	..\CI.yml = ..\.github\workflows\CI.yml
 	..\Release.yml = ..\.github\workflows\Release.yml
 	..\PreRelease.yml = ..\.github\workflows\PreRelease.yml
+	.editorconfig = .editorconfig
 EndProjectSection
 EndProject
 Global

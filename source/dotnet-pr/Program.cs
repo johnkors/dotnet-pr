@@ -4,7 +4,7 @@ using PR;
 using PR.PRTools;
 
 using var serviceProvider = Bootstrap(args);
-var runner = serviceProvider.GetService<Application>();
+var runner = serviceProvider.GetRequiredService<Application>();
 
 try
 {
@@ -12,19 +12,21 @@ try
 }
 catch (ApplicationException ae)
 {
-    var logger = serviceProvider.GetService<ILogger<Program>>();
+    var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
     logger.LogError($"¯\\_(ツ)_/¯ \n{ae.Message}");
 }
 catch (Exception e)
 {
-    var logger = serviceProvider.GetService<ILogger<Program>>();
+    var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
     logger.LogError($"¯\\_(ツ)_/¯ \n{e.Message}");
 }
+
+return;
 
 ServiceProvider Bootstrap(string[] args)
 {
     var enableDebug = args.Contains("--debug");
-    var targetBranch = string.Empty;
+    string targetBranch;
     if (args.Length > 0)
     {
         var restOfArgs = args.ToList();
@@ -35,11 +37,8 @@ ServiceProvider Bootstrap(string[] args)
     {
         targetBranch = "main";
     }
-    var debugOptions = new AppOptions
-    {
-        EnableDebug = enableDebug,
-        TargetBranch = targetBranch
-    };
+
+    var debugOptions = new AppOptions { EnableDebug = enableDebug, TargetBranch = targetBranch };
 
     var services = new ServiceCollection()
         .AddLogging(c =>
@@ -54,7 +53,6 @@ ServiceProvider Bootstrap(string[] args)
             {
                 c.SetMinimumLevel(LogLevel.Warning);
             }
-
         })
         .AddSingleton(debugOptions)
         .AddSingleton<GitRepositoryLocator>()

@@ -1,21 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>net8.0;net7.0</TargetFrameworks>
-        <RootNamespace>dotnet_pr.tests</RootNamespace>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>dotnet_pr.tests</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="GitHubActionsTestLogger" Version="1.2.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-        <PackageReference Include="xunit" Version="2.4.0" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="GitHubActionsTestLogger" Version="2.4.1"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
+    <PackageReference Include="xunit.abstractions" Version="2.0.3"/>
+    <PackageReference Include="xunit.v3" Version="1.1.0"/>
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\dotnet-pr\dotnet-pr.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dotnet-pr\dotnet-pr.csproj"/>
+  </ItemGroup>
 
 </Project>
