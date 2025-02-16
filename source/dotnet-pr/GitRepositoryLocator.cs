@@ -18,7 +18,7 @@ internal class GitRepositoryLocator(ILogger<GitRepositoryLocator> logger)
         return repository;
     }
 
-    private Repository LocateRepository(string currentDirectory)
+    private Repository? LocateRepository(string currentDirectory)
     {
         logger.LogDebug("Searching for git repo in " + currentDirectory);
 
@@ -26,26 +26,27 @@ internal class GitRepositoryLocator(ILogger<GitRepositoryLocator> logger)
         {
             return new Repository(currentDirectory);
         }
-        catch(RepositoryNotFoundException)
+        catch (RepositoryNotFoundException)
         {
+            var currentDir = Directory.GetParent(currentDirectory);
             try
             {
-                if (Directory.GetParent(currentDirectory) == null)
+                if (currentDir == null)
                 {
                     return null;
                 }
 
-                if(!Directory.GetParent(currentDirectory).Exists)
+                if (!currentDir.Exists)
                 {
                     return null;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
 
-            var parentDir = Directory.GetParent(currentDirectory).FullName;
+            var parentDir = currentDir.FullName;
             return LocateRepository(parentDir);
         }
     }
